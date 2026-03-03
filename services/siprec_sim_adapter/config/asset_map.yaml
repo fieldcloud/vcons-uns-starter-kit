@@ -1,0 +1,8 @@
+# asset_map.yaml for SIPREC simulation
+defaults:
+  enterprise: acme
+  site: site1
+
+assets:
+  pump07:
+    asset_path: "acme/site1/areaA/line3/pump07"

@@ -1,0 +1,20 @@
+[project]
+name = "siprec-sim-adapter"
+version = "0.1.0"
+description = "Simulated SIPREC folder-drop adapter -> vCon (OKF PoC)."
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.27",
+  "pydantic>=2.6",
+  "requests>=2.31",
+  "vcon",
+]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I"]
+ignore = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

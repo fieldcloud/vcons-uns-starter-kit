@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/uns_vcon_event.schema.json",
+  "title": "UNS vCon Event",
+  "type": "object",
+  "required": [
+    "vcon_id",
+    "asset_path",
+    "conversation_type",
+    "vcon_ref",
+    "start",
+    "end"
+  ],
+  "properties": {
+    "vcon_id": {
+      "type": "string",
+      "description": "vCon UUID"
+    },
+    "asset_path": {
+      "type": "string",
+      "description": "ISA-95 style path for asset context"
+    },
+    "conversation_type": {
+      "type": "string",
+      "description": "e.g. troubleshooting, handover, vendor_support"
+    },
+    "vcon_ref": {
+      "type": "string",
+      "description": "URL/URI pointer to vCon in store"
+    },
+    "start": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "end": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Participant roles only"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "revision_hash": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

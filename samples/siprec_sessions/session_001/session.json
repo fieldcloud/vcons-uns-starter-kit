@@ -1,0 +1,10 @@
+{
+  "call_id": "CALL-001",
+  "from": "sip:operator@acme.example",
+  "to": "sip:vendor_support@vendor.example",
+  "start_time": "2026-03-01T09:45:00Z",
+  "end_time": "2026-03-01T09:52:00Z",
+  "asset_hint": "pump07",
+  "conversation_type": "troubleshooting",
+  "notes": "Simulated SIPREC metadata for PoC"
+}

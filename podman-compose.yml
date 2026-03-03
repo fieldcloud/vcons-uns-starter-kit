@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  emqx:
+    image: emqx/emqx:5
+    ports:
+      - "1883:1883"
+      - "18083:18083"
+    environment:
+      - EMQX_NAME=emqx
+    healthcheck:
+      test: ["CMD", "sh", "-c", "nc -z localhost 1883"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  vcon_store_stub:
+    build:
+      context: ./services/vcon_store_stub
+    ports:
+      - "8000:8000"
+    volumes:
+      - vcon_store_data:/data
+    environment:
+      - STORE_PATH=/data
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -qO- http://localhost:8000/healthz >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  siprec_sim_adapter:
+    build:
+      context: ./services/siprec_sim_adapter
+    depends_on:
+      - vcon_store_stub
+    environment:
+      - VCON_STORE_URL=http://vcon_store_stub:8000
+      - SIPREC_INBOX=/data/inbox
+      - SIPREC_ARCHIVE=/data/archive
+    volumes:
+      - ./runtime:/data
+      - ./services/siprec_sim_adapter/config:/app/config:ro
+
+  vcon_uns_bridge:
+    build:
+      context: ./services/vcon_uns_bridge
+    depends_on:
+      - emqx
+      - vcon_store_stub
+    environment:
+      - VCON_STORE_URL=http://vcon_store_stub:8000
+      - MQTT_HOST=emqx
+      - MQTT_PORT=1883
+      - MQTT_TOPIC_ROOT=acme/site1
+      - ASSET_MAP_PATH=/app/config/asset_map.yaml
+    volumes:
+      - ./services/vcon_uns_bridge/config:/app/config:ro
+
+volumes:
+  vcon_store_data:

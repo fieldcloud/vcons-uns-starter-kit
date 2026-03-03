@@ -1,0 +1,6 @@
+defaults:
+  topic_root: "acme/site1"
+
+assets:
+  pump07:
+    asset_path: "acme/site1/areaA/line3/pump07"
